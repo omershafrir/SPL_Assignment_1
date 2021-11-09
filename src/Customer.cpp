@@ -4,7 +4,9 @@
 #include <string>
 
 int main(){
-
+string x = " shafrir the king of the git";
+std::cout << x << std::endl;
+x = 4;
 }
 
 
