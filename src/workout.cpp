@@ -1,4 +1,6 @@
-//
-// Created by omershafrir on 09/11/2021.
-//
+class Workout{
+    #constractor
+    #getting_info_from_file
 
+    ###go to file reader and bring me the id,name,price,type
+};
