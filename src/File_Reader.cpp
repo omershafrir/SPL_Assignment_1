@@ -33,12 +33,6 @@ vector<int>* convert(string input){
     return output;
 }
 
-void deleteVector(vector<int>* v){
-    for(int x : v){
-        delete x;
-    }
-    v=nullptr;
-}
 //reading txt function
 void read(){
     using namespace std;

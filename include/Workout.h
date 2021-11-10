@@ -1,6 +1,5 @@
 #ifndef WORKOUT_H_
 #define WORKOUT_H_
-
 #include <string>
 
 enum WorkoutType{
@@ -14,6 +13,7 @@ public:
     std::string getName() const;
     int getPrice() const;
     WorkoutType getType() const;
+    void print();
 private:
 	const int id;
     const std::string name;
