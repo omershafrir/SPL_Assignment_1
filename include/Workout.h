@@ -9,11 +9,13 @@ enum WorkoutType{
 class Workout{
 public:
     Workout(int w_id, std::string w_name, int w_price, WorkoutType w_type);
+    Workout(const Workout &w);
+//    Workout& operator=(const Workout &other);      - to figure out
     int getId() const;
     std::string getName() const;
     int getPrice() const;
     WorkoutType getType() const;
-    void print();
+    void print();       //self-test func
 private:
 	const int id;
     const std::string name;

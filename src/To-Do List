@@ -1,0 +1,12 @@
+Workout:
+to verify:
+1. create workout instances fields on the stack?
+2. to implement only : constructor, copy constructor?
+3. should we implement copy assignment operator? Workout class fields are const therefore
+   copy assignment operator is not reasonable.
+4. should we overload Destructor?
+
+
+Workout finished members:
+id, name, price, type
+constructor , copy constructor , getId, getName, getPrice, getType
