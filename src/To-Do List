@@ -10,3 +10,32 @@ to verify:
 Workout finished members:
 id, name, price, type
 constructor , copy constructor , getId, getName, getPrice, getType
+
+_________________________________________________________________________________
+
+Customer:
+to verify:
+1. create workout instances fields on the stack?
+2. to implement only : constructor, copy constructor?
+3. should we implement copy assignment operator? Workout class fields are const therefore
+   copy assignment operator is not reasonable.
+4. should we overload Destructor?
+
+Customer finished members:
+id, name
+constructor , copy constructor, getId, getName
+
+_________________________________________________________________________________________
+
+Sweaty/Cheap/HeavyMuscle/FullBody Customer:
+to verify:
+1. copy constructor implementation. valid?
+2. toString(). valid?
+3. vector<int> order should include *id's* of ordered workouts?
+4. vector<int> order() should be allocated in stack?
+5. rule of 5?
+6. sort function for the price vector
+
+missing:
+1. HeavyMuscle order()
+2. FullBody()

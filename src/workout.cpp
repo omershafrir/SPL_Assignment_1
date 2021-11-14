@@ -1,5 +1,9 @@
 #include <iostream>
 #include "../include/Workout.h"
+    using namespace std;
+    Workout::Workout():id(0),name(nullptr),price(0),type(NOTDEFINED){
+
+    }
     //constructor
     Workout::Workout(int w_id, std::string w_name, int w_price, WorkoutType w_type):
     id(w_id),name(w_name),price(w_price),type(w_type)
@@ -9,18 +13,11 @@
     Workout::Workout(const Workout &w):
     id(w.id),name(w.name),price(w.price),type(w.type)
     {
-//        this->id=w.id;
-//        this->name=w.name;
-//        this->price=w.price;
-//        this->type=w.type;
     }
     //copy assignment operator
-//    Workout&::Workout operator=(const Workout &other){
-//        id=w.id;
-//        name=w.name;
-//        price=w.price;
-//        type=w.type;
-//        return *this;
+//    Workout & Workout:: operator=(const Workout &other){
+//        Workout tmp = Workout(other.id,other.name,other.price,other.type);
+//        return tmp;
 //    }
     //we dont define move constructor since workout does not own resources
 
