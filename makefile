@@ -19,6 +19,7 @@ bin/Functions.o:src/Functions.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Functions.o src/Functions.cpp
 bin/Trainer.o:src/Trainer.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Trainer.o src/Trainer.cpp
+
 	@echo success
 clean:
 	rm bin/test_main.o bin/File_Reader.o bin/workout.o bin/Customer.o run

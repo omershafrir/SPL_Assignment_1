@@ -13,14 +13,24 @@ void printVector (vector<int> v){
     cout<<endl;
 }
 
+bool comperator(Workout &w1, Workout &w2){
+    if(w1.getPrice() < w2.getPrice())
+        return true;
+    return false;
+}
 
 int main(int argc, char *argv) {
     //ANAEROBIC, MIXED, CARDIO
-    vector<Workout> w;
+    vector <Workout> w;
+    {
 
-//    Workout w1= Workout(1,"1",30,CARDIO);
-//    Workout w2= Workout(2,"2",300,ANAEROBIC);
-//    cout<<w1.getName()<<"    \n"<<w2.getName();
+
+        Workout w1 = Workout(1, "1", 3000, CARDIO);
+        Workout w2 = Workout(2, "2", 300, ANAEROBIC);
+        w.push_back(w1);
+    }
+
+    cout<<w[0].getName();
 //    w1=w2;
 //    cout<<w1.getName()<<"    "<<w2.getName();
 //    Workout w3= Workout(3,"soccer",12,MIXED);
@@ -30,10 +40,9 @@ int main(int argc, char *argv) {
 //    Workout w7= Workout(7,"baskeyball",150,MIXED);
 //    Workout w8= Workout(8,"baskeyball",15,ANAEROBIC);
 
-//    w.push_back(w1);
+
 //    w.push_back(w2);
 //    w.push_back(w3);
-
 //    w.push_back(w4);
 //    w.push_back(w5);
 //    w.push_back(w6);
@@ -42,7 +51,8 @@ int main(int argc, char *argv) {
 
 //    if(w1.getPrice() < w2.getPrice())
 //        return true;
-//    sort(w.begin(),w.end(),[](Workout w1,Workout w2){return w1.getPrice() <= w2.getPrice();});
+
+//    sort(w.begin(),w.end(),comperator);
 //    for(Workout x : w){
 //        std::cout<<"the price is " << x.getPrice() <<endl;
 //    }

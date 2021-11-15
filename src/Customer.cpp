@@ -23,13 +23,7 @@ std::string Customer::getName() const{
 int Customer::getId() const{
     return id;
 }
-//bool comperator(Workout w1, Workout w2){
-//    cout<<"  sdsd";
-//    if(w1.getPrice() < w2.getPrice())
-//        return true;
-//    return false;
-//    return (w1.getPrice()  w2.getPrice());
-//}
+
 ////////////////////////////SweatyCustomer/////////////////////////////////
     //SweatyCustomer constructor
 SweatyCustomer::SweatyCustomer(string name, int id): Customer(name,id){}
@@ -75,7 +69,7 @@ HeavyMuscleCustomer::HeavyMuscleCustomer(string name, int id): Customer(name,id)
 HeavyMuscleCustomer::HeavyMuscleCustomer(const HeavyMuscleCustomer &c):Customer(c.getName(),c.getId()){}
 vector<int> HeavyMuscleCustomer::order (const std::vector<Workout> &workout_options){
 //    vector<Workout> to_sort = workout_options;
-//    std::sort(to_sort.begin(),to_sort.end());
+//    sort(to_sort.begin(),to_sort.end());
     vector<int> *omer = new vector<int>;
     return *omer;
 }

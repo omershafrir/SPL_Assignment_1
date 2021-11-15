@@ -1,29 +1,31 @@
 Workout:
 to verify:
-1. create workout instances fields on the stack?
-2. to implement only : constructor, copy constructor?
+1. create workout instances fields on the stack? YES
+2. to implement only : constructor? YES
 3. should we implement copy assignment operator? Workout class fields are const therefore
-   copy assignment operator is not reasonable.
-4. should we overload Destructor?
+   copy assignment operator is not reasonable. NO
+4. should we overload Destructor? NO
+5.When the strategy is ordering the "most expensive" or "cheapest" exercise, and there is more
+  than one such exercise, the customer will order the exercise with the smallest id.
 
 
-Workout finished members:
+Workout finished members: ALL
 id, name, price, type
-constructor , copy constructor , getId, getName, getPrice, getType
+constructor , getId, getName, getPrice, getType
 
 _________________________________________________________________________________
 
 Customer:
 to verify:
-1. create workout instances fields on the stack?
-2. to implement only : constructor, copy constructor?
+1. create workout instances fields on the stack? YES
+2. to implement only : constructor? YES
 3. should we implement copy assignment operator? Workout class fields are const therefore
-   copy assignment operator is not reasonable.
-4. should we overload Destructor?
+   copy assignment operator is not reasonable. NO
+4. should we overload Destructor? NO
 
 Customer finished members:
 id, name
-constructor , copy constructor, getId, getName
+constructor , getId, getName
 
 _________________________________________________________________________________________
 
