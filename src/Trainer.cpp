@@ -25,16 +25,16 @@ int Trainer:: getCapacity() const{
 //        orderList.push_back(to_add);
 //    }
 //}
-void Trainer::removeCustomer(int id){
-    for(int i ; i<customersList.size() ; i++){
-        if (customersList[i]->getId()==id)
-            customersList.erase(customersList.begin()+i);
-    }
-    for(int i ; i<orderList.size() ; i++){
-        if (orderList[i].first->getId()==id)
-            orderList.erase(orderList.begin()+i);
-    }
-}
+//void Trainer::removeCustomer(int id){
+//    for(int i ; i<customersList.size() ; i++){
+//        if (customersList[i]->getId()==id)
+//            customersList.erase(customersList.begin()+i);
+//    }
+//    for(int i ; i<orderList.size() ; i++){
+//        if (orderList[i].first->getId()==id)
+//            orderList.erase(orderList.begin()+i);
+//    }
+//}
 
 
 

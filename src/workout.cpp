@@ -19,10 +19,10 @@
     }
 
     void Workout:: print(){     //self-test func
-        std::cout << "id "<< this->id << std::endl;
-        std::cout << "name "<< this->name << std::endl;
-        std::cout << "price "<< this->price << std::endl;
-        std::cout << "type"<< this->type << std::endl;
+        std::cout << "id : "<< this->id << std::endl;
+        std::cout << "name : "<< this->name << std::endl;
+        std::cout << "price : "<< this->price << std::endl;
+        std::cout << "type : "<< this->type << std::endl;
 
     }
 

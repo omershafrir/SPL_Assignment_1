@@ -41,3 +41,20 @@ to verify:
 missing:
 1. HeavyMuscle order()
 2. FullBody()
+
+-------------------------------------------------------------------------------------------
+File_Reader:
+to verify:
+1. to decide whether File_Reader class should have fields - or not. (right now: no fields, only 3 methods)
+2. to decide on privacy - whether to keep it public like it is now (unrecommended) or to make it private.
+
+---------------------------------------------------------------------------------------------
+Studio:
+to verify:
+1. right now: Studio() constructor receives configFilePath *by value* and not by reference as required. (sends error
+    when implemented by reference).
+2. what empty constructor does???
+
+missing:
+vector<Trainer*> trainers , vector<BaseAction*> actionsLog , getActionsLog() , getWorkoutOptions() ,
+getTrainer(int tid) ,  getNumOfTrainers() const , void start() ,
