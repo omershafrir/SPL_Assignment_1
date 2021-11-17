@@ -3,7 +3,9 @@
 #include "../include/Workout.h"
 #include "../include/Customer.h"
 #include "../include/Trainer.h"
+#include "../include/Studio.h"
 #include "../include/File_Reader.h"
+#include "../include/File_Reader_Output.h"
 #include <fstream>
 #include <sstream>
 using namespace std;
@@ -35,25 +37,36 @@ int main(int argc, char *argv) {
 //    w.push_back(w6);
 //    w.push_back(w7);
 //    w.push_back(w8);
-    File_Reader reader;
-//    string input="Yoga, Anaerobic, 90";
-//    string input="Spinning, Mixed, 120";
-//    Workout w =reader.convert_w(input,23);
+//    File_Reader reader;
+//////    string input="Yoga, Anaerobic, 90";
+//////    string input="Spinning, Mixed, 120";
+//////    Workout w =reader.convert_w(input,23);
     string path="src/config.txt";
-    int v1=reader.read_1(path);
-    vector<int> v2 = reader.read_2(path);
-    vector<Workout> v3 = reader.read_3(path);
+//    int v1=reader.read_1(path);
+//    vector<int> v2 = reader.read_2(path);
+//    vector<Workout> v3 = reader.read_3(path);
+//
+//    cout<<v1<<endl;
+//    printVector(v2);
+//    for( Workout w : v3) {
+//        w.print();
+//    }
+//
+//string s;
+//getline(cin,s);
+//
+//cout<<"s is "<< s <<endl;
 
-    cout<<v1<<endl;
-    printVector(v2);
-    for( Workout w : v3) {
+//File_Reader_Output x(path);
+//cout<<x.getNumberOfTrainers();
+//    printVector(x.getTrainersCapacities());
+
+
+Studio s=Studio(path);
+cout<<s.numberOfTrainers;
+    for( Workout w : s.workout_options) {
         w.print();
     }
-
-
-
-
-
 
 
 

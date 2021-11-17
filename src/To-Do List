@@ -12,7 +12,7 @@ to verify:
 Workout finished members: ALL
 id, name, price, type
 constructor , getId, getName, getPrice, getType
-
+COMPLETE
 _________________________________________________________________________________
 
 Customer:
@@ -26,7 +26,7 @@ to verify:
 Customer finished members:
 id, name
 constructor , getId, getName
-
+COMPLETE
 _________________________________________________________________________________________
 
 Sweaty/Cheap/HeavyMuscle/FullBody Customer:
@@ -47,6 +47,7 @@ File_Reader:
 to verify:
 1. to decide whether File_Reader class should have fields - or not. (right now: no fields, only 3 methods)
 2. to decide on privacy - whether to keep it public like it is now (unrecommended) or to make it private.
+3. optimize ?
 
 ---------------------------------------------------------------------------------------------
 Studio:

@@ -12,24 +12,24 @@ vector<int> File_Reader::convert(string input){
     int numDetector=0; //index of first letter of substring
     vector<int> output=vector<int>();
     for(int i=0;i<input.size();i++){
-    //case 1 - substring in the middle of string
-    if(input[i]==','){
-         string sub=input.substr(numDetector,i-numDetector);
-         stringstream subs(sub);
-         int temp=0;
-         subs>>temp;
-         output.push_back(temp);
-         numDetector=i+1;
+        //case 1 - substring in the middle of string
+        if(input[i]==','){
+            string sub=input.substr(numDetector,i-numDetector);
+            stringstream subs(sub);
+            int temp=0;
+            subs>>temp;
+            output.push_back(temp);
+            numDetector=i+1;
         }
-    //case 2- substring in the end of string
-    else if(i==input.size()-1){
-        string sub=input.substr(numDetector,i-numDetector+1);
-        stringstream subs(sub);
-        int temp=0;
-        subs>>temp;
-        output.push_back(temp);
-        numDetector=i+1;
-    }
+            //case 2- substring in the end of string
+        else if(i==input.size()-1){
+            string sub=input.substr(numDetector,i-numDetector+1);
+            stringstream subs(sub);
+            int temp=0;
+            subs>>temp;
+            output.push_back(temp);
+            numDetector=i+1;
+        }
     }
     return output;
 }
@@ -71,10 +71,10 @@ Workout File_Reader::convert_w(string input ,int id){
     w_price = convert_int(input.substr(input.length()-1-counter_price, input.length()-1));
     if(counter_type == 5)
         w_type = MIXED;
-        else if (counter_type == 6)
-            w_type = CARDIO;
-              else
-                  w_type = ANAEROBIC;
+    else if (counter_type == 6)
+        w_type = CARDIO;
+    else
+        w_type = ANAEROBIC;
     Workout w(w_id,w_name,w_price,w_type);
     return w;
 }
@@ -191,6 +191,5 @@ vector<Workout> File_Reader::read_3(string configFilePath){        //was:vector<
 ////    }
 ////    cout <<word<<" "; //last "good" word
 //};
-
 
 
