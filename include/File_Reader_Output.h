@@ -11,6 +11,7 @@ class File_Reader_Output : File_Reader{
 public:
 //    File_Reader_Output();
     File_Reader_Output(string _path);
+//    ~File_Reader_Output();
     int getNumberOfTrainers();
     vector<int> getTrainersCapacities();
     vector<Workout> getWorkout_options();

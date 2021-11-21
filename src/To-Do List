@@ -1,3 +1,10 @@
+General questions about the assignemnt:
+1. when we need to return a vector by reference : if we send it as is, isn't it by value, and exposed?
+both ways compile and work.
+  example in Trainer: getCustomers()
+             Studio: getWorkoutOptions()
+2.
+                       *************COMPLETE*****************
 Workout:
 to verify:
 1. create workout instances fields on the stack? YES
@@ -12,9 +19,9 @@ to verify:
 Workout finished members: ALL
 id, name, price, type
 constructor , getId, getName, getPrice, getType
-COMPLETE
+                           *************COMPLETE*****************
 _________________________________________________________________________________
-
+                           *************COMPLETE*****************
 Customer:
 to verify:
 1. create workout instances fields on the stack? YES
@@ -23,25 +30,46 @@ to verify:
    copy assignment operator is not reasonable. NO
 4. should we overload Destructor? NO
 
+5. do we need to keep copy constructor?
+
 Customer finished members:
 id, name
 constructor , getId, getName
-COMPLETE
+                             *************COMPLETE*****************
 _________________________________________________________________________________________
 
 Sweaty/Cheap/HeavyMuscle/FullBody Customer:
 to verify:
-1. copy constructor implementation. valid?
-2. toString(). valid?
-3. vector<int> order should include *id's* of ordered workouts?
-4. vector<int> order() should be allocated in stack?
-5. rule of 5?
+1. copy constructor implementation. valid? YES
+3. vector<int> order should include *id's* of ordered workouts? YES
+4. vector<int> order() should be allocated in stack? YES
+5. rule of 5? NO
 6. sort function for the price vector
+7. do we need to keep copy constructor? YES
 
-missing:
-1. HeavyMuscle order()
-2. FullBody()
+EVERYTHING IS COMPLETED EXCEPET FOR:
+implementation of : Cheap order() , HeavyMuscle order , FullBody Customer order();
+toString(). valid as a generic implementaion for all 4 customers?
 
+------------------------------------------------------------------------------------------
+Trainer:
+notes:
+1. in addCustomer(): only adding the customer to customerList, and not doing anything with the orderList!
+
+to verify
+1. both addCustomer() and removeCustomer()
+2. when removing customer form trainer : should change other customers id's???
+3. in getCustomer() : what to do when customer with id=_id is not found? right now: return nullptr;
+4. in getCustomers() and getOrders() : returning suitable vector<> by reference - to verify.
+5. customerList and orderList on heap?
+
+
+finished members:
+
+methods: basic constructor , getCapacity() , addCustomer() , removeCustomer() , getCustomer() , isOpen()
+         getCustomers() , getOrders()
+
+to complete: order() , closeTrainer() , openTrainer () , getSalary()
 -------------------------------------------------------------------------------------------
 File_Reader:
 to verify:
@@ -55,7 +83,42 @@ to verify:
 1. right now: Studio() constructor receives configFilePath *by value* and not by reference as required. (sends error
     when implemented by reference).
 2. what empty constructor does???
+3. method  std::vector<Workout>& getWorkoutOptions() : returning workout_options by reference - to verify.
 
 missing:
-vector<Trainer*> trainers , vector<BaseAction*> actionsLog , getActionsLog() , getWorkoutOptions() ,
-getTrainer(int tid) ,  getNumOfTrainers() const , void start() ,
+vector<Trainer*> trainers , vector<BaseAction*> actionsLog , getActionsLog() , void start() ,
+
+
+***rule of 5!!!
+
+Studio finished members:
+fields : open , workout_options , numberOfTrainers
+methodes: int getNumOfTrainers() , std::vector<Workout>& getWorkoutOptions() , getTrainer(int tid)
+
+----------------------------------------------------------------------------------------------------------------
+Actions:
+
+to verify:
+0. what use do base action members: 'error message' and 'status' have?
+1. complete() and error() : implementation is only to change the flag status?
+2. empty constructor?
+3. toString : needed to be on heap?
+4. log????
+
+missing:
+
+completed:
+
+
+
+
+Open Trainer:
+
+to verify:
+1. what needs to be in toString()?
+2. who calls OpenTrainer.act() when openTrainer is being instantiated ?
+(user types "open"-->OpenTrainer constructor is being called-->?)
+3. to make sure capacity of each trainer is implemented.
+
+
+

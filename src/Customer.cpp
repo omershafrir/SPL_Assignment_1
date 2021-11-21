@@ -23,6 +23,15 @@ std::string Customer::getName() const{
 int Customer::getId() const{
     return id;
 }
+//vector<int> sort_vec(vector<Workout>& to_sort){
+//    vector<int> sorted;
+//    int i = 0;
+//    for(Workout w : to_sort){
+//        sorted[i] = w.getPrice();
+//        i++;
+//    }
+//    return sorted;
+//}
 
 ////////////////////////////SweatyCustomer/////////////////////////////////
     //SweatyCustomer constructor
@@ -30,13 +39,13 @@ SweatyCustomer::SweatyCustomer(string name, int id): Customer(name,id){}
     //SweatyCustomer copy-constructor
 SweatyCustomer::SweatyCustomer(const SweatyCustomer &c):Customer(c.getName(),c.getId()){}
 vector<int> SweatyCustomer::order (const std::vector<Workout> &workout_options){
-    vector<int> *output_v=new vector<int>;
+    vector<int> output_v;
     for (int i=0;i<workout_options.size();i++){
         Workout w=workout_options[i];
         if(w.getType()==CARDIO)
-            output_v->push_back(w.getId());
+            output_v.push_back(w.getId());
     }
-    return *output_v;
+    return output_v;
 }
 string SweatyCustomer::toString() const{
     return "Name: "+getName()+" , Id: "+to_string(getId())+" ";
@@ -48,7 +57,8 @@ CheapCustomer::CheapCustomer(string name, int id): Customer(name,id){}
 CheapCustomer::CheapCustomer(const CheapCustomer &c):Customer(c.getName(),c.getId()){}
 vector<int> CheapCustomer::order (const std::vector<Workout> &workout_options){
     vector<int> output_v;
-    int min_price=workout_options[0].getPrice(),min_indx=0;     //index of cheapest workout
+    int min_price=workout_options[0].getPrice();
+    int min_indx=0;     //index of cheapest workout
     for (int i=1;i<workout_options.size();i++){
         Workout w=workout_options[i];
         if(w.getPrice()<min_price){
@@ -67,11 +77,11 @@ string CheapCustomer::toString() const{
 HeavyMuscleCustomer::HeavyMuscleCustomer(string name, int id): Customer(name,id){}
 //HeavyMuscleCustomer copy-constructor
 HeavyMuscleCustomer::HeavyMuscleCustomer(const HeavyMuscleCustomer &c):Customer(c.getName(),c.getId()){}
-vector<int> HeavyMuscleCustomer::order (const std::vector<Workout> &workout_options){
-//    vector<Workout> to_sort = workout_options;
-//    sort(to_sort.begin(),to_sort.end());
-    vector<int> *omer = new vector<int>;
-    return *omer;
+vector<int> HeavyMuscleCustomer::order (const std::vector<Workout> &workout_options){         //to implement
+////    vector<Workout> to_sort = workout_options;
+////    sort(to_sort.begin(),to_sort.end());
+    vector<int> a;
+    return a;
 }
 string HeavyMuscleCustomer::toString() const{
     return "Name: "+getName()+" , Id: "+to_string(getId())+" ";

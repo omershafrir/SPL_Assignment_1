@@ -12,6 +12,7 @@ class Studio{
 public:
 	Studio();
     Studio(const std::string &configFilePath);
+//    ~Studio();
     void start();
     int getNumOfTrainers() const;
     Trainer* getTrainer(int tid);
@@ -23,7 +24,7 @@ private:
     std::vector<Trainer*> trainers;
     std::vector<Workout> workout_options;
     std::vector<BaseAction*> actionsLog;
-    int numberOfTrainers;
+    int numberOfTrainers;   //added as a help member
 };
 
 #endif

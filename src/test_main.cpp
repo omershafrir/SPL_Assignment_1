@@ -4,6 +4,7 @@
 #include "../include/Customer.h"
 #include "../include/Trainer.h"
 #include "../include/Studio.h"
+#include "../include/Action.h"
 #include "../include/File_Reader.h"
 #include "../include/File_Reader_Output.h"
 #include <fstream>
@@ -17,56 +18,85 @@ void printVector (vector<int> v){
     cout<<endl;
 }
 
-
+vector<int> sort_vec(vector<Workout>& to_sort){
+    vector<int> *sorted=new vector<int>;
+    for(int i = 0; i < to_sort.size(); i++){
+        sorted->push_back(to_sort[i].getPrice());
+    }
+    return *sorted;
+}
 int main(int argc, char *argv) {
     //ANAEROBIC, MIXED, CARDIO
-//    vector <Workout> w;
-//        Workout w1 = Workout(1, "1", 3000, CARDIO);
-//        Workout w2 = Workout(2, "2", 300, ANAEROBIC);
-//    cout<<w1.getName()<<"    "<<w2.getName();
-//    Workout w3= Workout(3,"soccer",12,MIXED);
-//    Workout w4= Workout(4,"baskeyball",1,CARDIO);
-//    Workout w5= Workout(5,"baskeyball",195,ANAEROBIC);
-//    Workout w6= Workout(6,"baskeyball",125,MIXED);
-//    Workout w7= Workout(7,"baskeyball",150,MIXED);
-//    Workout w8= Workout(8,"baskeyball",15,ANAEROBIC);
-//    w.push_back(w2);
-//    w.push_back(w3);
-//    w.push_back(w4);
-//    w.push_back(w5);
-//    w.push_back(w6);
-//    w.push_back(w7);
-//    w.push_back(w8);
-//    File_Reader reader;
-//////    string input="Yoga, Anaerobic, 90";
-//////    string input="Spinning, Mixed, 120";
-//////    Workout w =reader.convert_w(input,23);
+
     string path="src/config.txt";
-//    int v1=reader.read_1(path);
-//    vector<int> v2 = reader.read_2(path);
-//    vector<Workout> v3 = reader.read_3(path);
-//
-//    cout<<v1<<endl;
-//    printVector(v2);
-//    for( Workout w : v3) {
+    Studio s=Studio(path);
+
+//    s.start();
+    vector<Workout> to_sort = s.getWorkoutOptions();
+//    cout<<to_sort[0].getName();
+//    printVector(sort_vec(to_sort));
+    vector<int> x = sort_vec(to_sort);
+//    cout<<x[0];
+    printVector(x);
+    x.erase(x.begin()+1);
+    printVector(x);
+
+//    Customer *omer = new SweatyCustomer("omer",0);
+//    Customer *erez = new SweatyCustomer("erez",23);
+//    vector<Customer*> v;
+//    v.push_back(omer); v.push_back(erez);
+//    OpenTrainer open(-1,v);
+//    open.act(s);
+//    OpenTrainer open2(1,v);
+//    open2.act(s);
+//    cout<<open.getStatus()<<endl;
+//    cout<<open2.getStatus()<<endl;
+//    s.getTrainer(0)->printCustomers();
+//    delete omer;
+//    delete erez;
+//    delete &open;
+//    delete &open2;
+//    delete &v;
+//    delete &s;
+
+//    cout<<s.getTrainer(0)->isOpen()<<endl;
+//    cout<<s.getTrainer(1)->isOpen()<<endl;
+//    cout<<s.getTrainer(0)->isOpen();
+//    cout<<open.toString();
+//    cout<<s.getTrainer(0)->isOpen();
+
+
+
+
+
+//    vector<Customer*> v;
+//    Customer *omer = new SweatyCustomer("omer",0);
+//    Customer *erez = new SweatyCustomer("erez",23);
+//    Studio s=Studio(path);
+//    OpenTrainer x(0,v);
+//    x.act(s);
+////    OpenTrainer y(3,v);
+//    cout<<s.getTrainer(0)->isOpen()<<" omer";
+//    cout<<s.getTrainer(1)->isOpen()<<" erez";
+//    delete omer;
+//    delete erez;
+
+//cout<<s.numberOfTrainers;
+//vector<Workout>  x = s.getWorkoutOptions();
+//    cout<<&x<<endl;
+//    for( Workout w : x) {
 //        w.print();
 //    }
-//
-//string s;
-//getline(cin,s);
-//
-//cout<<"s is "<< s <<endl;
-
-//File_Reader_Output x(path);
-//cout<<x.getNumberOfTrainers();
-//    printVector(x.getTrainersCapacities());
 
 
-Studio s=Studio(path);
-cout<<s.numberOfTrainers;
-    for( Workout w : s.workout_options) {
-        w.print();
-    }
+//v.push_back(omer);
+//v.push_back(erez);
+//Trainer t=Trainer(3);
+//    t.addCustomer(v[0]);
+//    t.addCustomer(v[1]);
+//    cout<<t.getCustomers()[0]->getName()<<endl;
+//    cout<<t.getCustomers()[1]->getName()<<endl;
+//        cout<<t.getCustomer(23)->getName();
 
 
 

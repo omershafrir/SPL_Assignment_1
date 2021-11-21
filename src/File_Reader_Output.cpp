@@ -9,6 +9,11 @@ File_Reader_Output::File_Reader_Output(string _path):File_Reader(),path(_path){
     trainersCapacities=read_2(path);
     workout_options=read_3(path);
 }
+//File_Reader_Output::~File_Reader_Output(){
+////    delete &path;
+//    delete &trainersCapacities;
+//    delete &workout_options;
+//}
 int File_Reader_Output::getNumberOfTrainers(){
     return numberOfTrainers;
 }

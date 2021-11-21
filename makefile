@@ -1,7 +1,7 @@
 all: run
 
-run: bin/test_main.o bin/File_Reader.o bin/workout.o bin/Customer.o bin/Functions.o bin/Trainer.o bin/Studio.o bin/File_Reader_Output.o
-	g++ bin/test_main.o bin/File_Reader.o bin/workout.o bin/Customer.o bin/Functions.o bin/Trainer.o bin/Studio.o bin/File_Reader_Output.o -o run
+run: bin/test_main.o bin/File_Reader.o bin/workout.o bin/Customer.o bin/Functions.o bin/Trainer.o bin/Studio.o bin/File_Reader_Output.o bin/Action.o
+	g++ bin/test_main.o bin/File_Reader.o bin/workout.o bin/Customer.o bin/Functions.o bin/Trainer.o bin/Studio.o bin/File_Reader_Output.o bin/Action.o -o run
 
 bin/test_main.o: src/test_main.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/test_main.o src/test_main.cpp
@@ -27,6 +27,9 @@ bin/Studio.o:src/Studio.cpp
 bin/File_Reader_Output.o:src/File_Reader_Output.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/File_Reader_Output.o src/File_Reader_Output.cpp
 
+bin/Action.o:src/Action.cpp
+	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Action.o src/Action.cpp
+
 	@echo success
 clean:
-	rm bin/test_main.o bin/File_Reader.o bin/workout.o bin/Customer.o bin/Functions.o bin/Trainer.o bin/Studio.o run
+	rm bin/test_main.o bin/File_Reader.o bin/workout.o bin/Customer.o bin/Functions.o bin/Trainer.o bin/Studio.o bin/File_Reader_Output.o bin/Action.o run
