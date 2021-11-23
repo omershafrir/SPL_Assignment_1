@@ -84,9 +84,10 @@ to verify:
     when implemented by reference).
 2. what empty constructor does???
 3. method  std::vector<Workout>& getWorkoutOptions() : returning workout_options by reference - to verify.
-
+4. customer_counter is on heap!!!!!!!!
 missing:
 vector<Trainer*> trainers , vector<BaseAction*> actionsLog , getActionsLog() , void start() ,
+
 
 
 ***rule of 5!!!
@@ -116,9 +117,10 @@ Open Trainer:
 
 to verify:
 1. what needs to be in toString()?
-2. who calls OpenTrainer.act() when openTrainer is being instantiated ?
-(user types "open"-->OpenTrainer constructor is being called-->?)
-3. to make sure capacity of each trainer is implemented.
+3. to make sure capacity of each trainer is implemented. YES
+
+Order:
+1.
 
 
 

@@ -3,25 +3,33 @@
 #include "../include/Studio.h"
 #include <vector>
 using namespace std;
-Trainer::Trainer(int t_capacity):capacity(t_capacity),open(false){
+Trainer::Trainer(int t_capacity):capacity(t_capacity) , current_capacity(0) , open(false) , salary(0){
+    vector<Customer*> customersList() ;
     //customerslist & orderlist will get their values when
     //the "open Trainer" function will get the proper inputs for it
     //should be Initialized when "open studio" is evoked(?)
 }
 
 //Trainer:: ~Trainer(){
-//        delete &customersList;
-//        delete &orderList;
+////    delete[] &customersList;
+//        for (Customer *c : customersList)
+//            delete c;
+////        for (OrderPair order : orderList)
+////            delete &order;
 //}
 int Trainer:: getCapacity() const{
     return this->capacity;
 }
 
-//until studio is ready this function is irrelevant
+int Trainer::getCurrentCapacity() {
+    return current_capacity;
+}
 
 void Trainer::addCustomer(Customer* customer) {
-    if(current_capacity<capacity)
+    if(current_capacity<capacity) {
         customersList.push_back(customer);
+        current_capacity++;
+    }
     //order func will call the suitable order function
     // for the specific customer type
 
@@ -29,11 +37,20 @@ void Trainer::addCustomer(Customer* customer) {
     ///////////////////  orderList only when order() will be called!
     }
 
-void Trainer::removeCustomer(int id){
-    for(int i ; i<customersList.size() ; i++){
+void Trainer::removeCustomer(int id) {
+    for (int i; i < customersList.size(); i++) {
         if (customersList[i]->getId() == id) {
             customersList.erase(customersList.begin() + i);
             current_capacity--;
+            //replacing the old orderlist with the updated one
+            vector <OrderPair> newOrderList;
+            for (OrderPair pair: orderList) {
+                if (pair.first != id)                //pairs that stays on the orderList
+                    newOrderList.push_back(pair);
+                else
+                    //pairs that need to be removed are removed also from the salary calculation
+                    salary -= pair.second.getPrice();
+            }
         }
     }
 }
@@ -47,40 +64,58 @@ Customer* Trainer::getCustomer(int id){
 }
 
 vector<Customer*>& Trainer::getCustomers(){
-    //option 1:
-    //definding a refrence to the field and returning it
-    vector<Customer*> &customer = customersList;
-    return customer;
-    //option 2:
-    //returning the field
     return customersList;
 }
 vector<OrderPair>& Trainer::getOrders(){
-    vector<OrderPair> &orders = orderList;
-    return orders;
+    return orderList;
 }
 //missing implementaion:
-//void Trainer::order(const int customer_id, const std::vector<int> workout_ids, const std::vector<Workout>& workout_options){}
+void Trainer::order(const int customer_id, const std::vector<int> workout_ids, const std::vector<Workout>& workout_options){
+    for (int i : workout_ids) {
+        OrderPair order (customer_id , workout_options[i]);
+        orderList.push_back(order);
+        salary += workout_options[i].getPrice();
+    }
+}
 void Trainer::openTrainer(){
     open=true;
 }
-//missing implementaion:
-//void Trainer::closeTrainer(){}
 
-//missing implementaion:
-//int Trainer::getSalary(){ return 0;}
+//void Trainer::closeTrainer(){}            //missing implementaion:
+
+int Trainer::getSalary(){
+    return salary;
+}
+
 ////////////////////////
 bool Trainer::isOpen(){
     return open;
 }
 
+void Trainer::printOrder(){                     //added member
+    for (OrderPair order : orderList){
+        cout<<customersList[order.first]->getName() << " Is Doing " << order.second.getName();
+        cout<<"\n";
+    }
+}
 void Trainer::printCustomers(){
     if(!open)
         cout<<"Trainer is not open"<<endl;
     else
-         for (Customer* customer : customersList)
-             cout<<customer->toString()<<endl;
+//        for(customer *c : customersList)
+//             cout<<c->toString()<<endl;
+         for (int i=0; i<current_capacity ; i++)
+             cout<<customersList[i]->toString()<<endl;
 }               //self check function
+void Trainer::printOrderList(){
+    if(!open)
+        cout<<"Trainer is not open"<<endl;
+    else
+        for (OrderPair order : orderList){
+            cout<< "ID : "<< order.first << " workout: " << order.second.getName()<<endl;
+        }
+}               //self check function
+
 
 
 

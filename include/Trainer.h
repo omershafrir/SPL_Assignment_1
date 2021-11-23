@@ -12,6 +12,7 @@ public:
     Trainer(int t_capacity);
 //    ~Trainer();
     int getCapacity() const;
+    int getCurrentCapacity() ;      //added member
     void addCustomer(Customer* customer);
     void removeCustomer(int id);
     Customer* getCustomer(int id);
@@ -20,11 +21,14 @@ public:
     void order(const int customer_id, const std::vector<int> workout_ids, const std::vector<Workout>& workout_options);
     void openTrainer();
     void closeTrainer();
-    int getSalary();
+    int getSalary();              //added member
     bool isOpen();
-    void printCustomers();       //self check function
+    void printCustomers();        //self check function
+    void printOrderList();        //self check function
+    void printOrder();            //added member
 private:
     int current_capacity;            //added member
+    int salary;                      //added member
     int capacity;
     bool open;
     std::vector<Customer*> customersList;

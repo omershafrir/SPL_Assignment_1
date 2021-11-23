@@ -25,6 +25,7 @@ private:
     std::vector<Workout> workout_options;
     std::vector<BaseAction*> actionsLog;
     int numberOfTrainers;   //added as a help member
+    int *customer_counter;   //added as a help member
 };
 
 #endif
