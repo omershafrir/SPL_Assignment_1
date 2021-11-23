@@ -1,0 +1,15 @@
+# Number of trainers
+6
+
+# Traines
+2,4,90,8,2,1
+
+# Work Options
+Mixed_2, Mixed, 90
+Cardio_2, Cardio, 1000
+Anaerobic_1, Anaerobic, 20
+Cardio_1, Cardio, 50
+Mixed_1, Mixed, 9
+Anaerobic_3max, Anaerobic, 110
+Anaerobic_2, Anaerobic, 70
+
