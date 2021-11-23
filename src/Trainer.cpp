@@ -5,6 +5,7 @@
 using namespace std;
 Trainer::Trainer(int t_capacity):capacity(t_capacity) , current_capacity(0) , open(false) , salary(0){
     vector<Customer*> customersList() ;
+    vector<OrderPair> orderList;
     //customerslist & orderlist will get their values when
     //the "open Trainer" function will get the proper inputs for it
     //should be Initialized when "open studio" is evoked(?)
@@ -38,21 +39,31 @@ void Trainer::addCustomer(Customer* customer) {
     }
 
 void Trainer::removeCustomer(int id) {
-    for (int i; i < customersList.size(); i++) {
+    vector <OrderPair> newOrderList;
+    bool found = false;
+    for (int i=0; i < customersList.size(); i++) {
         if (customersList[i]->getId() == id) {
             customersList.erase(customersList.begin() + i);
             current_capacity--;
             //replacing the old orderlist with the updated one
-            vector <OrderPair> newOrderList;
+            found = true;
             for (OrderPair pair: orderList) {
                 if (pair.first != id)                //pairs that stays on the orderList
                     newOrderList.push_back(pair);
-                else
+                else{
                     //pairs that need to be removed are removed also from the salary calculation
                     salary -= pair.second.getPrice();
+                }
             }
         }
     }
+    if(found){
+        orderList.clear();
+        for (OrderPair pair: newOrderList) {
+            orderList.push_back(pair);
+        }
+    }
+
 }
 
 Customer* Trainer::getCustomer(int id){
@@ -72,7 +83,9 @@ vector<OrderPair>& Trainer::getOrders(){
 //missing implementaion:
 void Trainer::order(const int customer_id, const std::vector<int> workout_ids, const std::vector<Workout>& workout_options){
     for (int i : workout_ids) {
-        OrderPair order (customer_id , workout_options[i]);
+        OrderPair order (customer_id , workout_options[i]);                   //before change
+//        OrderPair  order;
+//        order = make_pair(customer_id , workout_options[i]) ;
         orderList.push_back(order);
         salary += workout_options[i].getPrice();
     }
@@ -92,10 +105,10 @@ bool Trainer::isOpen(){
     return open;
 }
 
-void Trainer::printOrder(){                     //added member
-    for (OrderPair order : orderList){
-        cout<<customersList[order.first]->getName() << " Is Doing " << order.second.getName();
-        cout<<"\n";
+void Trainer::printOrder() {                     //added member
+
+    for (int i = 0; i < orderList.size(); i++) {
+        cout << getCustomer(orderList[i].first)->getName() << " Is Doing " << orderList[i].second.getName() << endl;
     }
 }
 void Trainer::printCustomers(){

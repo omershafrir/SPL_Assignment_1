@@ -25,7 +25,6 @@ Studio::Studio(const std::string &configFilePath):open(false){
     numberOfTrainers = input.getNumberOfTrainers();
     vector<int> trainersCapacities = input.getTrainersCapacities();
     trainers=vector<Trainer*>(numberOfTrainers);
-//    trainers=*(new vector<Trainer*>(numberOfTrainers));               ////to remove this line when finished testing/////
     for(int i = 0; i<numberOfTrainers; i++){
         trainers[i] = new Trainer(trainersCapacities[i]);
     }
@@ -41,6 +40,7 @@ void Studio::start(){
     std::cout<<"Studio is now open!"<<endl;
     open = true;
     while(open){
+        cout<<"----------------------------------------------------------------"<<endl;
         string user_input;
         getline(cin,user_input);
         if(user_input.substr(0 , 4) == "open"){
@@ -74,16 +74,15 @@ void Studio::start(){
             }
                 Order *order =new Order(trainer_id);     //ordering trainer
                 order->act(*this);
-//                cout<<"---------------------------"<<endl;
-//                cout<<"salary : "<< trainers[trainer_id]->getSalary();  ///////////#####/////////////////
+                cout<<"salary : "<< trainers[trainer_id]->getSalary()<<endl;  ///////////#####/////////////////
 //                trainers[trainer_id]->printOrderList();
+                cout<<"\n";
         }
         if(user_input.substr(0 , 4) == "move"){
             cout<<"self check print: "<<"move is starting! "<<endl;   ///////////#####/////////////////
             int src_id , dst_id , c_id;
             bool first=true;
             user_input.erase(user_input.begin(), user_input.begin() + 5);
-            cout<<user_input<<endl;                                 //////////#####/////////////////
             for(int i=0; i < user_input.length(); i++) {
                 if (user_input[i] == ' ') {
                     stringstream subs(user_input.substr(0,i));
@@ -98,16 +97,12 @@ void Studio::start(){
                      i = 0;
                 }
                  if(i == user_input.length()-1){
-                    cout<<"found: "<<user_input<<endl;
                     stringstream subs(user_input);
                     subs >> c_id;
                     i=0;
                 }
 
             }
-            cout<<src_id<<endl;
-            cout<<dst_id<<endl;
-            cout<<c_id<<endl;
             MoveCustomer *move = new MoveCustomer(src_id , dst_id , c_id);
             move->act(*this);
             cout<<move->toString()<<endl;                           ///////////#####/////////////////

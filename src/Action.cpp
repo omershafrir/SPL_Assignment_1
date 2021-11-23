@@ -64,9 +64,6 @@ string OpenTrainer::toString() const{
     return s;
 }
 
-
-
-
 /////////////////////////////////////////////////////Order///////////////////////////////////////////////////
 Order::Order(int id):trainerId(id) {
 }
@@ -77,7 +74,8 @@ void Order::act(Studio &studio){
         error("Trainer does not exist or is open");
         else{
             Trainer *this_trainer = studio.getTrainer(trainerId);
-            for (Customer *c : this_trainer->getCustomers()){
+            vector<Customer*> x =this_trainer->getCustomers();
+            for (Customer *c : x){
                 this_trainer->order(c->getId() , c->order(studio.getWorkoutOptions()) , studio.getWorkoutOptions());
             }
         this_trainer->printOrder();
@@ -128,12 +126,16 @@ void MoveCustomer::act(Studio &studio) {
     dst_t->addCustomer(src_t->getCustomer(id));
     src_t->removeCustomer(id);
     complete();
+    cout<<"Trainer with this capacity "<<src_t->getCapacity()<<" orders are: "<<endl;     ///////////##########################################
+    src_t->printOrderList();                          ///////////##########################################
+    cout<<"Trainer with this capacity "<<dst_t->getCapacity()<<" orders are: "<<endl;     ///////////##########################################
+    dst_t->printOrderList();                         ////////##########################################
 }
 string MoveCustomer::toString() const{
     stringstream ss;
     if(getStatus() == ERROR)
         return "Cannot move customer";
-    ss << "Customer num. "<< id<<"moved from " << srcTrainer <<" to "<< dstTrainer;
+    ss << "Customer num. "<< id<<" moved from " << srcTrainer <<" to "<< dstTrainer;
     ss << "\n";
     string s = ss.str();
     return s;

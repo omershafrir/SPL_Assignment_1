@@ -17,15 +17,17 @@ Customer* makeCustomer(string name, int id , string code);      //forward declar
 void printCustomerList(vector<Customer*> customersList);        //forward declaration
 
 
-//open 2 shalom,swt omer,swt erez,swt moshe,swt micha,swt shmuel,swt
+
+//open 0 swt,swt fbd,fbd chp,chp mcl,mcl micha,swt shmuel,swt rocker,swt
 //open 1 shalom,swt rocker,swt
-//open 1 shalom,swt omer,swt erez,swt moshe,swt micha,swt shmuel,swt rocker,swt shalom,swt omer,swt erez,swt moshe,swt micha,swt shmuel,swt rocker,swt
+//open 2 shalom,swt omer,swt erez,swt moshe,swt micha,swt shmuel,swt
 int main(int argc, char *argv) {
     //ANAEROBIC, MIXED, CARDIO
 
     string path="src/config2.txt";
     Studio *s=new Studio(path);
     s->start();
+
 
 
 

@@ -23,16 +23,14 @@ std::string Customer::getName() const{
 int Customer::getId() const{
     return id;
 }
-//vector<int> sort_vec(vector<Workout>& to_sort){
-//    vector<int> sorted;
-//    int i = 0;
-//    for(Workout w : to_sort){
-//        sorted[i] = w.getPrice();
-//        i++;
-//    }
-//    return sorted;
-//}
 
+//should they be static?
+static bool min_func(const pair<int,int> first, const pair<int,int> sec){
+    return (first.second < sec.second);
+}
+static bool max_func(const pair<int,int> first, const pair<int,int> sec){
+    return (first.second < sec.second);
+}
 ////////////////////////////SweatyCustomer/////////////////////////////////
     //SweatyCustomer constructor
 SweatyCustomer::SweatyCustomer(string name, int id): Customer(name,id){}
@@ -66,7 +64,10 @@ vector<int> CheapCustomer::order (const std::vector<Workout> &workout_options){
             min_indx=i;
         }
     }
-    output_v.push_back(min_indx);
+                                                //was changed from
+//    output_v.push_back(min_indx);
+                                            //to this - sending back the workout id
+    output_v.push_back(workout_options[min_indx].getId());
     return output_v;
 }
 string CheapCustomer::toString() const{
@@ -78,10 +79,20 @@ HeavyMuscleCustomer::HeavyMuscleCustomer(string name, int id): Customer(name,id)
 //HeavyMuscleCustomer copy-constructor
 HeavyMuscleCustomer::HeavyMuscleCustomer(const HeavyMuscleCustomer &c):Customer(c.getName(),c.getId()){}
 vector<int> HeavyMuscleCustomer::order (const std::vector<Workout> &workout_options){         //to implement
-////    vector<Workout> to_sort = workout_options;
-////    sort(to_sort.begin(),to_sort.end());
-    vector<int> a;
-    return a;
+    vector<pair<int,int>> anaerobic_only;
+    vector<int> output;
+    for(int i = 0; i < workout_options.size(); i++){
+        if(workout_options[i].getType() == ANAEROBIC){
+            pair<int,int> w(workout_options[i].getId(),workout_options[i].getPrice());
+            anaerobic_only.push_back(w);
+        }
+    }
+    while(!anaerobic_only.empty()){
+        //the id of the most expensive workout
+        output.push_back(max_element(anaerobic_only.begin(), anaerobic_only.end(), max_func)->first);
+        anaerobic_only.erase(max_element(anaerobic_only.begin(), anaerobic_only.end(), max_func));
+    }
+    return output;
 }
 string HeavyMuscleCustomer::toString() const{
     return "Name: "+getName()+" , Id: "+to_string(getId())+" ";
@@ -92,55 +103,35 @@ FullBodyCustomer::FullBodyCustomer(string name, int id): Customer(name,id){}
 //FullBodyCustomer copy-constructor
 FullBodyCustomer::FullBodyCustomer(const FullBodyCustomer &c):Customer(c.getName(),c.getId()){}
 vector<int> FullBodyCustomer::order (const std::vector<Workout> &workout_options) {
-    vector<int> output_v;
-//    ANAEROBIC, MIXED, CARDIO
-    int mix_id = -1, mix_p = -1;         //catching cheapest, expensive , cheapest
-    int anrbic_id = -1, anrbic_p = -1;
-    int cardio_id = -1, cardio_p = -1;
-    bool firstMix=false , firstCardio=false , firstAnrbic=false;
-    for (int i = 0; i < workout_options.size(); i++) {
-        Workout w = workout_options[i];
-        if (w.getType() == CARDIO) {
-            if(!firstCardio) {
-                cardio_id = w.getId();
-                cardio_p = w.getPrice();
-                firstCardio=true;
-            }
-            else if (cardio_p > w.getPrice()) {
-                cardio_id = w.getId();
-                cardio_p = w.getPrice();
-            }
-        }
-        if (w.getType() == MIXED ) {
-            if(!firstMix) {
-                mix_id = w.getId();
-                mix_p = w.getPrice();
-                firstMix=true;
-            }
-            else if (mix_p < w.getPrice()) {
-                mix_id = w.getId();
-                mix_p = w.getPrice();
-            }
-        }
-        if (w.getType() == ANAEROBIC) {
-            if(!firstAnrbic) {
-                anrbic_id = w.getId();
-                anrbic_p = w.getPrice();
-                firstAnrbic=true;
-            }
-            else if (anrbic_p > w.getPrice()) {
-                anrbic_id = w.getId();
-                anrbic_p = w.getPrice();
-            }
+    vector<pair<int,int>> anaerobic_only;
+    vector<pair<int,int>> cardio_only;
+    vector<pair<int,int>> mix_only;
+    vector<int> output;
+    for(int i = 0; i < workout_options.size(); i++){
+        if(workout_options[i].getType() == CARDIO){
+            pair<int,int> w(workout_options[i].getId(),workout_options[i].getPrice());
+            cardio_only.push_back(w);
         }
     }
-        if (cardio_id != -1)
-            output_v.push_back(cardio_id);
-        if (mix_id != -1)
-            output_v.push_back(mix_id);
-        if (anrbic_id != -1)
-            output_v.push_back(anrbic_id);
-        return output_v;
+    for(int i = 0; i < workout_options.size(); i++){
+        if(workout_options[i].getType() == MIXED){
+            pair<int,int> w(workout_options[i].getId(),workout_options[i].getPrice());
+            mix_only.push_back(w);
+        }
+    }
+    for(int i = 0; i < workout_options.size(); i++){
+        if(workout_options[i].getType() == ANAEROBIC){
+            pair<int,int> w(workout_options[i].getId(),workout_options[i].getPrice());
+            anaerobic_only.push_back(w);
+        }
+    }
+    //the id of the cheapest cardio
+    output.push_back(min_element(cardio_only.begin(), cardio_only.end(), min_func)->first);
+    //the id of the most expensive mixed
+    output.push_back(max_element(mix_only.begin(), mix_only.end(), max_func)->first);
+    //the id of the cheapest enaerobic
+    output.push_back(min_element(anaerobic_only.begin(), anaerobic_only.end(), min_func)->first);
+    return output;
 }
 string FullBodyCustomer::toString() const{
     return "Name: "+getName()+" , Id: "+to_string(getId())+" ";
