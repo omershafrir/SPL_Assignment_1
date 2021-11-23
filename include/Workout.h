@@ -13,7 +13,7 @@ public:
     std::string getName() const;
     int getPrice() const;
     WorkoutType getType() const;
-    void print();       //self-test func
+    void print();                   //added member
 private:
 	const int id;
     const std::string name;

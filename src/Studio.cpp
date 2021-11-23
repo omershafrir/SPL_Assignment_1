@@ -108,6 +108,36 @@ void Studio::start(){
             cout<<move->toString()<<endl;                           ///////////#####/////////////////
 
         }
+        if(user_input.substr(0 , 5) == "close") {
+            cout << "self check print: " << "close is starting! " << endl;   ///////////#####/////////////////
+            user_input.erase(user_input.begin(), user_input.begin() + 5);
+            stringstream subs(user_input);
+            int trainer_to_close;
+            subs >> trainer_to_close;
+            Close *close = new Close(trainer_to_close);
+            close->act(*this);
+        }
+        if(user_input == "workout_options"){
+            cout<<"self check print_workouts: "<<"print is starting! "<<endl;   ///////////#####/////////////////
+            PrintWorkoutOptions *print = new PrintWorkoutOptions();
+            print->act(*this);
+            cout<<"\n";
+        }
+        if(user_input.substr(0 , 6) == "status"){
+            cout<<"self check print_trainer: "<<"order is starting! "<<endl;   ///////////#####/////////////////
+            int trainer_id;
+            for(int i=7 ; i<user_input.length() ; i++) {
+                if (i == user_input.length()-1) {
+                    stringstream subs(user_input.substr(6,user_input.length()-6));
+                    user_input.erase(user_input.begin(), user_input.begin() + i + 1);
+                    subs >> trainer_id;
+                    break;
+                }
+            }
+            PrintTrainerStatus *print =new PrintTrainerStatus(trainer_id);     //ordering trainer
+            print->act(*this);
+            cout<<"\n";
+        }
     }
 }                                   // -not implemented yet
 

@@ -93,9 +93,14 @@ void Trainer::order(const int customer_id, const std::vector<int> workout_ids, c
 void Trainer::openTrainer(){
     open=true;
 }
-
-//void Trainer::closeTrainer(){}            //missing implementaion:
-
+void Trainer::closeTrainer(){
+//    while(!customersList.empty()){
+//        customersList.erase(customersList.begin());
+//    }
+    customersList.clear();
+    orderList.clear();
+    open = false;
+}
 int Trainer::getSalary(){
     return salary;
 }

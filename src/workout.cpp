@@ -18,11 +18,8 @@
         return type;
     }
 
+    string types[] = {"ANAEROBIC" , "MIXED" , "CARDIO" };
     void Workout:: print(){     //self-test func
-        std::cout << "id : "<< this->id << std::endl;
-        std::cout << "name : "<< this->name << std::endl;
-        std::cout << "price : "<< this->price << std::endl;
-        std::cout << "type : "<< this->type << std::endl;
-
+        cout<<name<<", "<<types[type]<<", "<<price<<endl;
     }
 

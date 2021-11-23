@@ -87,9 +87,6 @@ string Order::toString() const{
 }
 
 ////////////////////////////////////////////////////MoveCustomer//////////////////////////////////////////
-//    const int srcTrainer;
-//    const int dstTrainer;
-//    const int id;
 
 MoveCustomer::MoveCustomer(int src, int dst, int customerId):srcTrainer(src),dstTrainer(dst),id(customerId){}
 void MoveCustomer::act(Studio &studio) {
@@ -142,23 +139,70 @@ string MoveCustomer::toString() const{
 }
 
 ////////////////////////////////////////////////////Close//////////////////////////////////////////
-//class Close : public BaseAction {
-//public:
-//    Close(int id);
-//    void act(Studio &studio);
-//    std::string toString() const;
+Close::Close(int id):trainerId(id){}
+void Close::act(Studio &studio){
+    if(trainerId > studio.getNumOfTrainers()-1 || trainerId < 0)        //check if trainer exist
+        error("Trainer does not exist or is not open");
+    else if(!studio.getTrainer(trainerId)->isOpen())                    //check if trainer open or closed
+        error("Trainer does not exist or is not open");
+    else{
+        Trainer *to_close = studio.getTrainer(trainerId);
+        to_close->closeTrainer();
+        cout<<"Trainer "<< trainerId << " closed. " << "Salary "<<to_close->getSalary()<<"NIS"<<endl;
+        complete();
+    }
+}
+string Close::toString() const{
+}
+
+/////////////////////////////////////////////////////PrintWorkoutOptions///////////////////////////////////////////////////
+
+PrintWorkoutOptions::PrintWorkoutOptions(){
+
+}
+void PrintWorkoutOptions::act(Studio &studio){
+    vector<Workout> workout_oprions = studio.getWorkoutOptions();
+    for(Workout w : workout_oprions){
+        w.print();
+    }
+    complete();
+}
+string PrintWorkoutOptions::toString() const{
+    return "Workout Options had been printed successfully.";
+}
+
+
+/////////////////////////////////////////////////////PrintTrainerOptions///////////////////////////////////////////////////
+//class PrintTrainerStatus : public BaseAction {
+
 //private:
 //    const int trainerId;
 
+PrintTrainerStatus::PrintTrainerStatus(int id):trainerId(id){
 
-//Close::Close(int id):trainerId(id){
-//}
-//void Close::act(Studio &studio){
-//    if(trainerId > studio.getNumOfTrainers()-1 || trainerId < 0)        //check if trainer exist
-//        error("Trainer does not exist or is not open");
-//    else if(!studio.getTrainer(trainerId)->isOpen())                    //check if trainer open or closed
-//        error("Trainer does not exist or is not open");
-//}
-//string Close::toString() const{
-//
-//}
+}
+void PrintTrainerStatus::act(Studio &studio){
+    Trainer *this_trainer = studio.getTrainer(trainerId);
+    vector<OrderPair> orders = this_trainer->getOrders();
+    string open;
+    if(this_trainer->isOpen())
+        open = "open";
+    else
+        open = "closed";
+    cout<<"Trainer "<<trainerId<<" status: "<<open<<endl;
+    cout<<"Customers:"<<endl;
+    for( Customer *c : this_trainer->getCustomers()){
+        cout<<c->getId()<<" "<<c->getName()<<endl;
+    }
+    cout<<"Orders:"<<endl;
+    for (OrderPair pair : orders){
+        Workout w = pair.second;
+        cout<<w.getName()<<" "<<w.getPrice()<<"NIS "<<pair.first<<endl;
+    }
+    cout<<"Current Trainer's Salary: "<<this_trainer->getSalary()<<"NIS"<<endl;
+    complete();
+}
+string PrintTrainerStatus::toString() const{
+    return "Trainer Status has been printed successfully.";
+}
+
