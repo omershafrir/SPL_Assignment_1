@@ -11,13 +11,11 @@ Trainer::Trainer(int t_capacity):capacity(t_capacity) , current_capacity(0) , op
     //should be Initialized when "open studio" is evoked(?)
 }
 
-//Trainer:: ~Trainer(){
-////    delete[] &customersList;
-//        for (Customer *c : customersList)
-//            delete c;
-////        for (OrderPair order : orderList)
-////            delete &order;
-//}
+Trainer:: ~Trainer(){
+        for (Customer *c : customersList)
+            delete c;
+        delete &customersList;
+}
 int Trainer:: getCapacity() const{
     return this->capacity;
 }
@@ -84,8 +82,6 @@ vector<OrderPair>& Trainer::getOrders(){
 void Trainer::order(const int customer_id, const std::vector<int> workout_ids, const std::vector<Workout>& workout_options){
     for (int i : workout_ids) {
         OrderPair order (customer_id , workout_options[i]);                   //before change
-//        OrderPair  order;
-//        order = make_pair(customer_id , workout_options[i]) ;
         orderList.push_back(order);
         salary += workout_options[i].getPrice();
     }
@@ -129,9 +125,12 @@ void Trainer::printOrderList(){
     if(!open)
         cout<<"Trainer is not open"<<endl;
     else
-        for (OrderPair order : orderList){
-            cout<< "ID : "<< order.first << " workout: " << order.second.getName()<<endl;
+        for (int i=0 ; i<orderList.size() ; i++){
+            cout<< "ID : "<< orderList[i].first << " workout: " << orderList[i].second.getName()<<endl;
         }
+//        for (OrderPair order : orderList){
+//            cout<< "ID : "<< order.first << " workout: " << order.second.getName()<<endl;
+//        }
 }               //self check function
 
 

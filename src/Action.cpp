@@ -46,20 +46,16 @@ void OpenTrainer::act(Studio &studio){
         }
     }
 }
-//OpenTrainer:: ~OpenTrainer(){
-////    delete[] &customers;
-////    for (Customer *c : customers)
-////        delete c;
-//}
 string OpenTrainer::toString() const{
     stringstream ss;
-    if(getStatus() == ERROR)
-        return "The action was not successful";
-    ss << "The following customers has been added to trainer num." << to_string(trainerId) <<": ";
-    ss << "\n";
+    ss << "open " << to_string(trainerId)<<" ";
     for (Customer* customer : customers){
-        ss << customer->toString() << "\n";
+        ss << customer->toString();
     }
+    if(getStatus() == ERROR)
+        ss << " Error: Workout session does not exist or is already open";
+    else
+        ss << " Completed";
     string s = ss.str();
     return s;
 }
@@ -83,7 +79,14 @@ void Order::act(Studio &studio){
         }
 }
 string Order::toString() const{
-    return "0";
+    stringstream ss;
+    ss << "order " << to_string(trainerId);
+    if(getStatus() == ERROR)
+        ss << " Error: Trainer does not exist or is open";
+    else
+        ss << " Completed";
+    string s = ss.str();
+    return s;
 }
 
 ////////////////////////////////////////////////////MoveCustomer//////////////////////////////////////////
@@ -130,10 +133,11 @@ void MoveCustomer::act(Studio &studio) {
 }
 string MoveCustomer::toString() const{
     stringstream ss;
+    ss << "move " <<to_string(srcTrainer)<<" "<<to_string(dstTrainer)<<" "<<to_string(id);
     if(getStatus() == ERROR)
-        return "Cannot move customer";
-    ss << "Customer num. "<< id<<" moved from " << srcTrainer <<" to "<< dstTrainer;
-    ss << "\n";
+        ss << " Error: Cannot move customer";
+    else
+        ss << " Completed";
     string s = ss.str();
     return s;
 }
@@ -153,6 +157,14 @@ void Close::act(Studio &studio){
     }
 }
 string Close::toString() const{
+    stringstream ss;
+    ss << "close " <<to_string(trainerId);
+    if(getStatus() == ERROR)
+        ss << " Error: Trainer does not exist or is not open";
+    else
+        ss << " Completed";
+    string s = ss.str();
+    return s;
 }
 
 /////////////////////////////////////////////////////PrintWorkoutOptions///////////////////////////////////////////////////
@@ -168,15 +180,11 @@ void PrintWorkoutOptions::act(Studio &studio){
     complete();
 }
 string PrintWorkoutOptions::toString() const{
-    return "Workout Options had been printed successfully.";
+    return "workout_options";
 }
 
+//////////////////////////////////////////////PrintTrainerOptions/////////////////////////////////////
 
-/////////////////////////////////////////////////////PrintTrainerOptions///////////////////////////////////////////////////
-//class PrintTrainerStatus : public BaseAction {
-
-//private:
-//    const int trainerId;
 
 PrintTrainerStatus::PrintTrainerStatus(int id):trainerId(id){
 
@@ -203,6 +211,59 @@ void PrintTrainerStatus::act(Studio &studio){
     complete();
 }
 string PrintTrainerStatus::toString() const{
-    return "Trainer Status has been printed successfully.";
+    return "status";
 }
 
+//////////////////////////////////////////////CloseAll/////////////////////////////////////
+
+CloseAll::CloseAll(){
+
+}
+void CloseAll::act(Studio &studio){
+    for (int i=0 ; i<studio.getNumOfTrainers() ; i++){
+        Trainer *trainer =studio.getTrainer(i);
+        if(trainer->isOpen()){
+//            cout<<"found:";
+            trainer->closeTrainer();
+            cout<<"Trainer "<<i<<" closed. Salary "<<trainer->getSalary()<<"NIS"<<endl;
+        }
+    }
+    complete();
+}
+string CloseAll::toString() const{
+    return "closeall";
+}
+
+//////////////////////////////////////////////PrintActionsLog/////////////////////////////////////
+
+PrintActionsLog::PrintActionsLog(){
+
+}
+void PrintActionsLog::act(Studio &studio){
+    for (BaseAction* action : studio.getActionsLog()){
+        cout<<action->toString()<<endl;
+    }
+    complete();
+}
+string PrintActionsLog::toString() const{
+    return "log";
+}
+
+//////////////////////////////////////////////BackupStudio/////////////////////////////////////
+
+//class BackupStudio : public BaseAction {
+//public:
+//    BackupStudio();
+//    void act(Studio &studio);
+//    std::string toString() const;
+//private:
+//};
+
+//////////////////////////////////////////////RestoreStudio/////////////////////////////////////
+
+//class RestoreStudio : public BaseAction {
+//public:
+//    RestoreStudio();
+//    void act(Studio &studio);
+//    std::string toString() const;
+//};

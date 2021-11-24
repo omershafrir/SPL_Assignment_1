@@ -12,12 +12,13 @@ class Studio{
 public:
 	Studio();
     Studio(const std::string &configFilePath);
-//    ~Studio();
+    ~Studio();
     void start();
     int getNumOfTrainers() const;
     Trainer* getTrainer(int tid);
 	const std::vector<BaseAction*>& getActionsLog() const; // Return a reference to the history of actions
     std::vector<Workout>& getWorkoutOptions();
+    std::vector<Customer*> stringToList(std::string user_input, int* counter, bool is_valid, int trainer_id); // Added as help member
 
 private:
     bool open;

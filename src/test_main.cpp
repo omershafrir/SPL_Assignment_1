@@ -18,15 +18,25 @@ void printCustomerList(vector<Customer*> customersList);        //forward declar
 
 
 
-//open 0 swt,swt fbd,fbd chp,chp mcl,mcl micha,swt shmuel,swt rocker,swt
+//open 2 swt,swt fbd,fbd chp,chp mcl,mcl micha,swt shmuel,swt rocker,swt rocker,swt rocker,swt rocker,swt
 //open 1 shalom,swt rocker,swt
-//open 2 shalom,swt omer,swt erez,swt moshe,swt micha,swt shmuel,swt
+//open 0 shalom,swt omer,swt erez,swt moshe,swt micha,swt shmuel,swt
 int main(int argc, char *argv) {
     //ANAEROBIC, MIXED, CARDIO
 
     string path="src/config2.txt";
     Studio *s=new Studio(path);
+//    delete s;
+//    s = nullptr;
+//    free(s);
     s->start();
+//    File_Reader_Output input = File_Reader_Output(path);
+
+//        Trainer *t = new Trainer(2);
+//        Customer *c = new SweatyCustomer ("d" , 1);
+//        t->addCustomer(c);
+//        delete t;
+
 
 
 

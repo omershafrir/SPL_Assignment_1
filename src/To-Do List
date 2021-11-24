@@ -67,9 +67,10 @@ to verify
 finished members:
 
 methods: basic constructor , getCapacity() , addCustomer() , removeCustomer() , getCustomer() , isOpen()
-         getCustomers() , getOrders()
+         getCustomers() , getOrders() , order() , closeTrainer() , openTrainer () , getSalary()
+         destructor
 
-to complete: order() , closeTrainer() , openTrainer () , getSalary()
+to complete: rule of 5
 -------------------------------------------------------------------------------------------
 File_Reader:
 to verify:
@@ -86,14 +87,12 @@ to verify:
 3. method  std::vector<Workout>& getWorkoutOptions() : returning workout_options by reference - to verify.
 4. customer_counter is on heap!!!!!!!!
 missing:
-vector<Trainer*> trainers , vector<BaseAction*> actionsLog , getActionsLog() , void start() ,
-
-
+ , vector<BaseAction*> actionsLog , getActionsLog() , void start()
 
 ***rule of 5!!!
 
 Studio finished members:
-fields : open , workout_options , numberOfTrainers
+fields : open , workout_options , numberOfTrainers , vector<Trainer*> trainers
 methodes: int getNumOfTrainers() , std::vector<Workout>& getWorkoutOptions() , getTrainer(int tid)
 
 ----------------------------------------------------------------------------------------------------------------

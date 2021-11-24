@@ -46,7 +46,7 @@ vector<int> SweatyCustomer::order (const std::vector<Workout> &workout_options){
     return output_v;
 }
 string SweatyCustomer::toString() const{
-    return "Name: "+getName()+" , Id: "+to_string(getId())+" ";
+    return (getName() + ",swt");
 }
 ///////////////////////////////////CheapCustomer///////////////////////////
 //CheapCustomer constructor
@@ -71,7 +71,7 @@ vector<int> CheapCustomer::order (const std::vector<Workout> &workout_options){
     return output_v;
 }
 string CheapCustomer::toString() const{
-    return "Name: "+getName()+" , Id: "+to_string(getId())+" ";
+    return (getName() + ",chp");
 }
 ///////////////////////////////////HeavyMuscleCustomer/////////////////////////
 //HeavyMuscleCustomer constructor
@@ -95,7 +95,7 @@ vector<int> HeavyMuscleCustomer::order (const std::vector<Workout> &workout_opti
     return output;
 }
 string HeavyMuscleCustomer::toString() const{
-    return "Name: "+getName()+" , Id: "+to_string(getId())+" ";
+    return (getName() + ",mcl");
 }
 /////////////////////////////////FullBodyCustomer//////////////////////////
 //FullBodyCustomer constructor
@@ -134,5 +134,5 @@ vector<int> FullBodyCustomer::order (const std::vector<Workout> &workout_options
     return output;
 }
 string FullBodyCustomer::toString() const{
-    return "Name: "+getName()+" , Id: "+to_string(getId())+" ";
+    return (getName() + ",fbd");
 }
