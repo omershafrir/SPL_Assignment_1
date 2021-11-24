@@ -211,7 +211,7 @@ void PrintTrainerStatus::act(Studio &studio){
     complete();
 }
 string PrintTrainerStatus::toString() const{
-    return "status";
+    return ("status " + to_string(trainerId));
 }
 
 //////////////////////////////////////////////CloseAll/////////////////////////////////////
