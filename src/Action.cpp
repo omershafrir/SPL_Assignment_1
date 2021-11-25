@@ -4,6 +4,7 @@
 #include <sstream>>
 
 using namespace std;
+extern Studio* backup = nullptr;
 BaseAction::BaseAction(){
 
 }
@@ -59,7 +60,15 @@ string OpenTrainer::toString() const{
     string s = ss.str();
     return s;
 }
+BaseAction* OpenTrainer::clone(){
+    return (new OpenTrainer(trainerId, customers));
+}
+OpenTrainer::~OpenTrainer(){
+    for(Customer *c : customers){
+        delete c;
+    }
 
+}
 /////////////////////////////////////////////////////Order///////////////////////////////////////////////////
 Order::Order(int id):trainerId(id) {
 }
@@ -72,7 +81,8 @@ void Order::act(Studio &studio){
             Trainer *this_trainer = studio.getTrainer(trainerId);
             vector<Customer*> x =this_trainer->getCustomers();
             for (Customer *c : x){
-                this_trainer->order(c->getId() , c->order(studio.getWorkoutOptions()) , studio.getWorkoutOptions());
+                vector<int> x =c->order(studio.getWorkoutOptions());
+                this_trainer->order(c->getId() , x , studio.getWorkoutOptions());
             }
         this_trainer->printOrder();
         complete();
@@ -88,7 +98,9 @@ string Order::toString() const{
     string s = ss.str();
     return s;
 }
-
+BaseAction* Order::clone(){
+    return (new Order(trainerId));
+}
 ////////////////////////////////////////////////////MoveCustomer//////////////////////////////////////////
 
 MoveCustomer::MoveCustomer(int src, int dst, int customerId):srcTrainer(src),dstTrainer(dst),id(customerId){}
@@ -141,7 +153,9 @@ string MoveCustomer::toString() const{
     string s = ss.str();
     return s;
 }
-
+BaseAction* MoveCustomer::clone(){
+    return (new MoveCustomer(srcTrainer, dstTrainer, id));
+}
 ////////////////////////////////////////////////////Close//////////////////////////////////////////
 Close::Close(int id):trainerId(id){}
 void Close::act(Studio &studio){
@@ -166,7 +180,9 @@ string Close::toString() const{
     string s = ss.str();
     return s;
 }
-
+BaseAction* Close::clone(){
+    return (new Close(trainerId));
+}
 /////////////////////////////////////////////////////PrintWorkoutOptions///////////////////////////////////////////////////
 
 PrintWorkoutOptions::PrintWorkoutOptions(){
@@ -182,7 +198,9 @@ void PrintWorkoutOptions::act(Studio &studio){
 string PrintWorkoutOptions::toString() const{
     return "workout_options";
 }
-
+BaseAction* PrintWorkoutOptions::clone(){
+    return (new PrintWorkoutOptions());
+}
 //////////////////////////////////////////////PrintTrainerOptions/////////////////////////////////////
 
 
@@ -211,9 +229,11 @@ void PrintTrainerStatus::act(Studio &studio){
     complete();
 }
 string PrintTrainerStatus::toString() const{
-    return ("status " + to_string(trainerId));
+    return "status";
 }
-
+BaseAction* PrintTrainerStatus::clone(){
+    return (new PrintTrainerStatus(trainerId));
+}
 //////////////////////////////////////////////CloseAll/////////////////////////////////////
 
 CloseAll::CloseAll(){
@@ -229,11 +249,14 @@ void CloseAll::act(Studio &studio){
         }
     }
     complete();
+    delete &studio;
 }
 string CloseAll::toString() const{
     return "closeall";
 }
-
+BaseAction* CloseAll::clone(){
+    return (new CloseAll());
+}
 //////////////////////////////////////////////PrintActionsLog/////////////////////////////////////
 
 PrintActionsLog::PrintActionsLog(){
@@ -248,22 +271,45 @@ void PrintActionsLog::act(Studio &studio){
 string PrintActionsLog::toString() const{
     return "log";
 }
-
+BaseAction* PrintActionsLog::clone(){
+    return (new PrintActionsLog());
+}
 //////////////////////////////////////////////BackupStudio/////////////////////////////////////
 
-//class BackupStudio : public BaseAction {
-//public:
-//    BackupStudio();
-//    void act(Studio &studio);
-//    std::string toString() const;
-//private:
-//};
+BackupStudio::BackupStudio() {
+
+}
+void BackupStudio::act(Studio &studio) {
+    if(backup != nullptr){
+        delete backup;
+        backup = nullptr;
+    }
+    //using copy constructor of studio
+    backup = new Studio(studio);
+    complete();
+}
+std::string BackupStudio::toString() const {
+    return "backup";
+}
+BaseAction* BackupStudio::clone(){
+    return (new BackupStudio());
+}
+
 
 //////////////////////////////////////////////RestoreStudio/////////////////////////////////////
 
-//class RestoreStudio : public BaseAction {
-//public:
-//    RestoreStudio();
-//    void act(Studio &studio);
-//    std::string toString() const;
-//};
+RestoreStudio::RestoreStudio(){}
+void RestoreStudio::act(Studio &studio){
+    if(backup == nullptr){
+        error("No backup available");
+        return;
+    }
+    studio = *backup;
+    complete();
+}
+std::string RestoreStudio::toString() const{
+    return "restore";
+}
+BaseAction* RestoreStudio::clone(){
+    return (new RestoreStudio());
+}

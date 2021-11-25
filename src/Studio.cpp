@@ -14,11 +14,11 @@ using namespace std;
 //vector<Customer*> stringToList(string user_input, int* counter, bool is_valid);              //forward declaration
 Customer* makeCustomer(string name, int id , string code);                                   //forward declaration
 void printCustomerList(vector<Customer*> customersList , Trainer *trainer);                  //forward declaration
-
-
+//default constructor
 Studio::Studio(){
 
 }
+//constructor
 Studio::Studio(const std::string &configFilePath):open(false){
     customer_counter = new int(0);
     File_Reader_Output input = File_Reader_Output(configFilePath);
@@ -31,11 +31,97 @@ Studio::Studio(const std::string &configFilePath):open(false){
     workout_options=input.getWorkout_options();
 
 }
-Studio::~Studio() {
-    delete customer_counter;
-    for ( Trainer *t : trainers)
-        delete t;
+//copy constructor
+Studio::Studio(const Studio &other){
+    open = other.open;
+    for(Workout w : other.workout_options){
+        workout_options.push_back(w);
+    }
+    trainers = copyTrainers(other.trainers);
+    actionsLog = copyActions(other.actionsLog);
+    numberOfTrainers = other.numberOfTrainers;   //added as a help member
+    int number_of_customer = *other.customer_counter;
+    customer_counter = new int(number_of_customer);
 }
+//move constructor
+//TODO-CHECK
+Studio::Studio(Studio &&other){
+    //copying other studios resources
+    open = other.open;
+    numberOfTrainers = other.numberOfTrainers;
+    int number_of_customer = *other.customer_counter;
+    customer_counter = new int(number_of_customer);
+    trainers = copyTrainers(other.trainers);
+    actionsLog = copyActions(other.actionsLog);
+    for(Workout w : other.workout_options){
+        workout_options.push_back(w);
+    }
+
+    //destructing other studio resources
+    for(Trainer *t : other.trainers){
+        delete t;
+    }
+    for(BaseAction *action : other.actionsLog){
+        delete action;
+    }
+
+}
+//copy assignment operator
+Studio &Studio::operator=(const Studio &studio){
+    if(this == &studio){
+        return *this;
+    }
+        open = studio.open;
+        trainers = copyTrainers(studio.trainers);
+        for(Workout w : studio.workout_options){
+            workout_options.push_back(w);
+        }
+        actionsLog = studio.actionsLog;
+        numberOfTrainers = studio.numberOfTrainers;   //added as a help member
+        int number_of_customer = *studio.customer_counter;
+        customer_counter = new int(number_of_customer);
+        return *this;
+}
+//move assignment operator
+//TODO-CHECK
+Studio &Studio::operator=(Studio &&studio){
+    if(this == &studio){
+        return *this;
+    }
+    //clears all previous data of this
+    open = studio.open;
+    trainers.clear();
+    workout_options.clear();
+    actionsLog.clear();
+
+    //stealing all other resources
+    trainers = studio.trainers;
+    for(Workout w : studio.workout_options){
+        workout_options.push_back(w);
+    }
+    actionsLog = studio.actionsLog;
+    numberOfTrainers = studio.numberOfTrainers;   //added as a help member
+    int number_of_customer = *studio.customer_counter;
+    customer_counter = new int(number_of_customer);
+    return *this;
+}
+//destructor
+Studio::~Studio() {
+    for (int i=0 ; i<actionsLog.size() ; i++){
+        delete actionsLog[i];
+        actionsLog[i] = nullptr;
+    }
+    actionsLog.clear();
+    for (int i=0 ; i<trainers.size() ; i++){
+        delete trainers[i];
+        trainers[i] = nullptr;
+    }
+    trainers.clear();
+    workout_options.clear();
+
+    delete customer_counter;
+}
+
 void Studio::start(){
     std::cout<<"Studio is now open!"<<endl;
     open = true;
@@ -118,6 +204,7 @@ void Studio::start(){
             cout << "self check print: " << "closeall is starting! " << endl;   ///////////#####/////////////////
             CloseAll *close_all = new CloseAll();
             close_all->act(*this);
+            delete close_all;
             break;
         }
         if(user_input.substr(0 , 5) == "close") {
@@ -160,6 +247,16 @@ void Studio::start(){
             actionsLog.push_back(printLog);
             cout<<"\n";
         }
+        if(user_input.substr(0 , 6) == "backup"){
+            BackupStudio *backup = new BackupStudio;
+            actionsLog.push_back(backup);
+            backup->act(*this);
+        }
+        if(user_input.substr(0 , 7) == "restore"){
+            RestoreStudio *restore = new RestoreStudio;
+            actionsLog.push_back(restore);
+            restore->act(*this);
+        }
     }
 
 }
@@ -176,7 +273,23 @@ Trainer* Studio::getTrainer(int tid) {
 const vector<BaseAction*>& Studio::getActionsLog() const{
     return actionsLog;
 }
+vector<Trainer*> Studio::copyTrainers(vector<Trainer*> v){
+    vector<Trainer*> new_trainers;
+    for(Trainer* trainer_from : v){
+       Trainer *trainer_to = new Trainer(*trainer_from);
+        new_trainers.push_back(trainer_to);
+    }
+    return new_trainers;
+}   //side function
 
+vector<BaseAction*> Studio::copyActions(vector<BaseAction*> v){      //side function
+    vector<BaseAction*> new_actions;
+    for(BaseAction *action_from : v){
+        BaseAction *action_to = action_from->clone();
+        new_actions.push_back(action_to);
+    }
+    return new_actions;
+}   //side function
 
 
 
