@@ -3,19 +3,90 @@
 #include "../include/Studio.h"
 #include <vector>
 using namespace std;
+Customer* makeCustomer(string name, int id , string code); //forward declaration
+
+//constructor
 Trainer::Trainer(int t_capacity):capacity(t_capacity) , current_capacity(0) , open(false) , salary(0){
-    vector<Customer*> customersList() ;
+    vector<Customer*> customersList ;
     vector<OrderPair> orderList;
-    //customerslist & orderlist will get their values when
-    //the "open Trainer" function will get the proper inputs for it
-    //should be Initialized when "open studio" is evoked(?)
+}
+//copy constructor
+Trainer::Trainer(const Trainer &other):capacity(other.capacity) , current_capacity(other.current_capacity) , open(other.open) , salary(other.salary){
+    for (Customer *c : other.customersList){
+        customersList.push_back(c->clone());
+    }
+    for (OrderPair pair : other.orderList) {
+        orderList.push_back(make_pair(pair.first , pair.second));
+    }
+}
+//move constructor
+Trainer::Trainer(Trainer&& other):capacity(other.capacity) , current_capacity(other.current_capacity) , open(other.open) , salary(other.salary){
+    for (Customer *c : other.customersList){
+        customersList.push_back(c);
+    }
+    for (OrderPair pair : other.orderList) {
+        orderList.push_back(pair);
+    }
+    other.customersList.clear();
+    other.orderList.clear();
+}
+//copy assignment operator
+Trainer Trainer::operator=(const Trainer &other){
+    if(this == &other)
+        return *this;
+
+    current_capacity = other.current_capacity;
+    open = other.open;
+    salary = other.salary;
+    customersList.clear();
+    orderList.clear();
+    for (Customer *c : other.customersList){
+        customersList.push_back(c->clone());
+    }
+    for (OrderPair pair : other.orderList) {
+        orderList.push_back(make_pair(pair.first , pair.second));
+    }
+    return *this;
+}
+//move assignment operator
+Trainer &Trainer::operator=(Trainer&& other){
+    if(this == &other)
+        return *this;
+
+    current_capacity = other.current_capacity;
+    open = other.open;
+    salary = other.salary;
+    customersList.clear();
+    orderList.clear();
+    for (Customer *c : other.customersList){
+        customersList.push_back(c);
+    }
+    for (OrderPair pair : other.orderList) {
+        orderList.push_back(pair);
+    }
+    other.customersList.clear();
+    other.orderList.clear();
+//    cout<<"other customers are:"<<endl;
+//    for(Customer *c : other.customersList)
+//        cout<<c->toString()<<endl;
+
+    return *this;
+}
+//destructor
+Trainer:: ~Trainer(){
+        for (int i = 0 ; i <customersList.size() ; i++){
+            delete customersList[i];
+            customersList[i] = nullptr;
+        }
+//        for (int i = 0 ; i <orderList.size() ; i++){
+//            delete orderList[i];
+//            customersList[i] = nullptr;
+//        }
+        customersList.clear();
+        orderList.clear();
+//        delete &customersList;
 }
 
-Trainer:: ~Trainer(){
-        for (Customer *c : customersList)
-            delete c;
-        delete &customersList;
-}
 int Trainer:: getCapacity() const{
     return this->capacity;
 }
@@ -61,6 +132,8 @@ void Trainer::removeCustomer(int id) {
             orderList.push_back(pair);
         }
     }
+    if(current_capacity == 0)
+        closeTrainer();
 
 }
 
@@ -78,7 +151,6 @@ vector<Customer*>& Trainer::getCustomers(){
 vector<OrderPair>& Trainer::getOrders(){
     return orderList;
 }
-//missing implementaion:
 void Trainer::order(const int customer_id, const std::vector<int> workout_ids, const std::vector<Workout>& workout_options){
     for (int i : workout_ids) {
         OrderPair order (customer_id , workout_options[i]);                   //before change
