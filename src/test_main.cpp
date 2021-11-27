@@ -12,6 +12,7 @@
 using namespace std;
 
 
+// asdsa
 vector<Customer*> stringToList(string user_input);              //forward declaration
 Customer* makeCustomer(string name, int id , string code);      //forward declaration
 void printCustomerList(vector<Customer*> customersList);        //forward declaration
@@ -23,6 +24,18 @@ Trainer x(Trainer t){
     return t;
 }
 
+
+
+
+
+Trainer x2(){
+    Trainer *t = new Trainer(217);
+    return *t;
+}
+
+
+
+
 vector<Trainer*> copyTrainers(vector<Trainer*> v){      //side function
     vector<Trainer*> new_trainers;
     for(Trainer* trainer_from : v){
@@ -31,9 +44,9 @@ vector<Trainer*> copyTrainers(vector<Trainer*> v){      //side function
     }
     return new_trainers;
 }
-Studio zub(Studio s){
-    s.start();
-    return s;
+Trainer zub(Trainer la);
+Trainer zub2() {
+    return Trainer(3);
 }
 //open 2 swt,swt fbd,fbd chp,chp mcl,mcl micha,swt shmuel,swt rocker,swt rocker,swt rocker,swt rocker,swt
 //open 1 shalom,swt rocker,swt
@@ -46,7 +59,19 @@ int main(int argc, char *argv) {
     s->start();
     delete s;
 
+//    Studio z(zub());
+//    Trainer la(std::move(zub2()));
+//    cout<< la.getCapacity()<<endl;
+//    Trainer s(1);
+//    s = zub(Trainer(0));
+//    cout << s.getCapacity() << endl;
+//        Studio s(Studio("Erez"));
+//        Studio s = Studio e
+//        cout<<s.getNumOfTrainers()<<endl;
 
+
+//        Trainer z = Trainer(x2());
+//        cout<<"are you open?: "<< z.isOpen()<<endl;
 //    Customer *z = new SweatyCustomer("ErezPoper" , 3);
 //    vector<Customer*> vec;
 //    vec.push_back(c); vec.push_back(z);
@@ -111,5 +136,7 @@ int main(int argc, char *argv) {
 //        t2.printCustomers();
 
 }
-
+Trainer zub(Trainer la){
+    return la;
+}
 

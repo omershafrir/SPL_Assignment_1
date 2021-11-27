@@ -50,20 +50,23 @@ Studio::Studio(Studio &&other){
     open = other.open;
     numberOfTrainers = other.numberOfTrainers;
     int number_of_customer = *other.customer_counter;
+    other.customer_counter = nullptr;
     customer_counter = new int(number_of_customer);
     trainers = copyTrainers(other.trainers);
     actionsLog = copyActions(other.actionsLog);
     for(Workout w : other.workout_options){
         workout_options.push_back(w);
     }
-
+    other.workout_options.clear();
     //destructing other studio resources
     for(Trainer *t : other.trainers){
         delete t;
     }
+    other.trainers.clear();
     for(BaseAction *action : other.actionsLog){
         delete action;
     }
+    other.actionsLog.clear();
 
 }
 //copy assignment operator
@@ -118,8 +121,8 @@ Studio::~Studio() {
     }
     trainers.clear();
     workout_options.clear();
-
     delete customer_counter;
+//    customer_counter = nullptr;
 }
 
 void Studio::start(){
@@ -290,7 +293,6 @@ vector<BaseAction*> Studio::copyActions(vector<BaseAction*> v){      //side func
     }
     return new_actions;
 }   //side function
-
 
 
 

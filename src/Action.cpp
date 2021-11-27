@@ -11,7 +11,10 @@ BaseAction::BaseAction(){
 ActionStatus BaseAction::getStatus() const{
     return status;
 }
+BaseAction::~BaseAction()
+{
 
+}
 void BaseAction:: complete(){
     status = COMPLETED;
 }
@@ -40,9 +43,13 @@ void OpenTrainer::act(Studio &studio){
             error("Workout session does not exist or is already open");
         else {
             this_trainer->openTrainer();
+
             for (Customer *customer : customers){         //adds all the customers received at 'customersList' to the session
                 this_trainer->addCustomer(customer);
             }
+//            for (Customer *customer : customers){         //adds all the customers received at 'customersList' to the session
+//                delete customer;
+//            }
             complete();                                 //call for base class method complete()
         }
     }
@@ -64,10 +71,6 @@ BaseAction* OpenTrainer::clone(){
     return (new OpenTrainer(trainerId, customers));
 }
 OpenTrainer::~OpenTrainer(){
-    for(Customer *c : customers){
-        delete c;
-    }
-
 }
 /////////////////////////////////////////////////////Order///////////////////////////////////////////////////
 Order::Order(int id):trainerId(id) {

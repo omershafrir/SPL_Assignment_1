@@ -52,7 +52,7 @@ Trainer Trainer::operator=(const Trainer &other){
 Trainer &Trainer::operator=(Trainer&& other){
     if(this == &other)
         return *this;
-
+    capacity = other.capacity;
     current_capacity = other.current_capacity;
     open = other.open;
     salary = other.salary;
@@ -84,6 +84,7 @@ Trainer:: ~Trainer(){
 //        }
         customersList.clear();
         orderList.clear();
+
 //        delete &customersList;
 }
 
@@ -162,10 +163,13 @@ void Trainer::openTrainer(){
     open=true;
 }
 void Trainer::closeTrainer(){
-//    while(!customersList.empty()){
-//        customersList.erase(customersList.begin());
-//    }
+    for(Customer *c : customersList){
+        delete c;
+    }
     customersList.clear();
+//    for(OrderPare order : orderList){
+//        delete order;
+//    }
     orderList.clear();
     open = false;
 }
